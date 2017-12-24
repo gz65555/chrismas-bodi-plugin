@@ -8,11 +8,9 @@ from random import randrange
 # 5s
 
 
-def steal_and_pick_one(uid):
-    payload = get_steal_params(uid)
-
+def steal_and_pick_one(payload):
     r = requests.get("http://wechat.bodimall.com/index/christmastree/steal", params=payload, headers=headers)
-
+    uid = payload['id']
     code = r.json()['code']
 
     if code == 0:
@@ -20,7 +18,7 @@ def steal_and_pick_one(uid):
         interval = float(randrange(1, 2)) / 10
         time.sleep(interval)
         pickR = requests.get("http://wechat.bodimall.com/index/christmastree/pick?type=free_gift&value=1",
-                             headers=headers)
+                            headers=headers)
         print(pickR.json())
 
         return True
